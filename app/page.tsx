@@ -22,6 +22,12 @@ export default function HomeProductsPage() {
         <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
           Список продуктов
         </h1>
+        <a
+          href="/create-product"
+          className="inline-block mt-2 bg-green-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-green-700"
+        >
+          Create product
+        </a>
       </div>
       <ProductList />
     </div>
