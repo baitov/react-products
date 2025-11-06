@@ -51,12 +51,12 @@ export default function ProductCard({ product }: ProductCardProps) {
           className="w-full h-full object-cover"
           onError={(e) => {
             // Подстановка, если изображение не загрузилось
-            (e.target as HTMLImageElement).src = 'https://via.placeholder.com/600x400?text=%D0%9D%D0%B5%D1%82+%D1%84%D0%BE%D1%82%D0%BE';
+            (e.target as HTMLImageElement).src = 'https://via.placeholder.com/600x400?text=No+Image';
           }}
         />
         {product.hasNoImage && (
           <span className="absolute top-2 left-2 bg-gray-900/75 text-white text-xs px-2 py-1 rounded">
-            Нет фото
+            No image
           </span>
         )}
       </div>
@@ -73,7 +73,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             <button
               onClick={handleLikeClick}
               className="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
-              aria-label={product.isLiked ? 'Убрать лайк' : 'Поставить лайк'}
+              aria-label={product.isLiked ? 'Remove like' : 'Set like'}
             >
               <Heart
                 size={20}
@@ -84,7 +84,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             <button
               onClick={handleDeleteClick}
               className="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
-              aria-label="Удалить продукт"
+              aria-label="Delete product"
             >
               <Trash2 size={20} className="text-gray-500 hover:text-red-500" />
             </button>
@@ -96,7 +96,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           {truncateDescription(product.description)}
         </p>
         {product.hasNoDescription && (
-          <span className="text-xs text-amber-600 dark:text-amber-400">Описание отсутствует</span>
+          <span className="text-xs text-amber-600 dark:text-amber-400">No description</span>
         )}
 
         {/* Цена и категория */}

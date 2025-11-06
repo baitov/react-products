@@ -21,13 +21,13 @@ export default function ProductDetailPage() {
       <div className="container mx-auto px-4 py-8">
         <div className="text-center">
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-            Продукт не найден
+            Product not found
           </h1>
           <Link
             href="/products"
             className="text-blue-600 dark:text-blue-400 hover:underline"
           >
-            ← Вернуться к списку продуктов
+            ← Back to products
           </Link>
         </div>
       </div>
@@ -36,18 +36,18 @@ export default function ProductDetailPage() {
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
-      {/* Кнопка назад */}
+      {/* Back button */}
       <Link
         href="/"
         className="inline-flex items-center text-blue-600 dark:text-blue-400 hover:underline mb-6"
       >
-        ← Вернуться к списку продуктов
+        ← Back to products
       </Link>
 
       {/* Детальная информация о продукте */}
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden">
         <div className="md:flex">
-          {/* Изображение продукта */}
+          {/* Product image */}
           <div className="md:w-1/2">
             <div className="relative w-full h-96 bg-gray-200 dark:bg-gray-700">
               <img
@@ -61,7 +61,7 @@ export default function ProductDetailPage() {
             </div>
           </div>
 
-          {/* Информация о продукте */}
+          {/* Product info */}
           <div className="md:w-1/2 p-8">
             <div className="flex items-start justify-between mb-4">
               <h1 className="text-3xl font-bold text-gray-900 dark:text-white flex-1">
@@ -91,7 +91,7 @@ export default function ProductDetailPage() {
 
             <div className="mb-6">
               <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-                Описание
+                Description
               </h2>
               <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
                 {product.description}
@@ -100,7 +100,7 @@ export default function ProductDetailPage() {
 
             <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
               <p className="text-sm text-gray-500 dark:text-gray-400">
-                ID продукта: {product.id}
+                Product ID: {product.id}
               </p>
             </div>
           </div>
