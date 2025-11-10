@@ -19,6 +19,8 @@ interface ProductsState {
   loading: boolean;
   error: string | null;
   filter: 'all' | 'favorites'; // Фильтр: все или только избранные
+  currentPage: number; // Текущая страница
+  itemsPerPage: number; // Количество элементов на странице
 }
 
 // Начальное состояние
@@ -27,6 +29,8 @@ const initialState: ProductsState = {
   loading: false,
   error: null,
   filter: 'all',
+  currentPage: 1,
+  itemsPerPage: 12,
 };
 
 // Моковые данные на русском языке для использования при недоступности API
@@ -200,10 +204,29 @@ const productsSlice = createSlice({
     // Удаление продукта
     removeProduct: (state, action: PayloadAction<number>) => {
       state.items = state.items.filter((item) => item.id !== action.payload);
+      // Проверяем, не стала ли текущая страница пустой после удаления
+      const filteredProducts = state.filter === 'favorites' 
+        ? state.items.filter((product) => product.isLiked)
+        : state.items;
+      const totalPages = Math.ceil(filteredProducts.length / state.itemsPerPage);
+      // Если текущая страница больше не существует, переходим на последнюю доступную
+      if (state.currentPage > totalPages && totalPages > 0) {
+        state.currentPage = totalPages;
+      }
     },
     // Изменение фильтра
     setFilter: (state, action: PayloadAction<'all' | 'favorites'>) => {
       state.filter = action.payload;
+      state.currentPage = 1; // Сбрасываем на первую страницу при смене фильтра
+    },
+    // Изменение текущей страницы
+    setCurrentPage: (state, action: PayloadAction<number>) => {
+      state.currentPage = action.payload;
+    },
+    // Изменение количества элементов на странице
+    setItemsPerPage: (state, action: PayloadAction<number>) => {
+      state.itemsPerPage = action.payload;
+      state.currentPage = 1; // Сбрасываем на первую страницу
     },
     // Добавление нового продукта (для создания пользователем)
     addProduct: (state, action: PayloadAction<Omit<Product, 'id'>>) => {
@@ -235,7 +258,7 @@ const productsSlice = createSlice({
   },
 });
 
-export const { toggleLike, removeProduct, setFilter, addProduct } = productsSlice.actions;
+export const { toggleLike, removeProduct, setFilter, addProduct, setCurrentPage, setItemsPerPage } = productsSlice.actions;
 export default productsSlice.reducer;
 
 

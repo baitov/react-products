@@ -3,16 +3,22 @@
 import { useAppSelector } from '@/lib/hooks';
 import ProductCard from './ProductCard';
 import Filter from './Filter';
+import Pagination from './Pagination';
 import { Loader2 } from 'lucide-react';
 
-// Компонент списка продуктов с фильтрацией
+// Компонент списка продуктов с фильтрацией и пагинацией
 export default function ProductList() {
-  const { items, loading, error, filter } = useAppSelector((state) => state.products);
+  const { items, loading, error, filter, currentPage, itemsPerPage } = useAppSelector((state) => state.products);
 
   // Фильтруем продукты в зависимости от выбранного фильтра
   const filteredProducts = filter === 'favorites' 
     ? items.filter((product) => product.isLiked)
     : items;
+
+  // Вычисляем индексы для текущей страницы
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const paginatedProducts = filteredProducts.slice(startIndex, endIndex);
 
   if (loading) {
     return (
@@ -48,11 +54,15 @@ export default function ProductList() {
   return (
     <div>
       <Filter />
+      <div className="mb-4 text-sm text-gray-600 dark:text-gray-400">
+        Showing {startIndex + 1}-{Math.min(endIndex, filteredProducts.length)} of {filteredProducts.length} products
+      </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        {filteredProducts.map((product) => (
+        {paginatedProducts.map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}
       </div>
+      <Pagination />
     </div>
   );
 }
