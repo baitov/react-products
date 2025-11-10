@@ -6,9 +6,11 @@
     "dev": "next dev",
     "build": "next build",
     "build:gh-pages": "GITHUB_PAGES=true next build",
+    "build:gh-pages:custom": "GITHUB_PAGES=true REPOSITORY_NAME=$npm_config_repo next build",
     "export": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "deploy": "npm run build:gh-pages && echo Build completed. Now push the 'out' folder to gh-pages branch."
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.10.1",

@@ -35,6 +35,7 @@
 ## Скрипты
 - `npm run dev` — запуск в режиме разработки
 - `npm run build` — сборка в продакшен
+- `npm run build:gh-pages` — сборка для GitHub Pages
 - `npm start` — запуск собранного приложения
 
 ## Структура
@@ -52,3 +53,25 @@
 1. Установите зависимости: `npm install`
 2. Запустите dev-сервер: `npm run dev`
 3. Откройте `http://localhost:3000`
+
+## Деплой на GitHub Pages
+
+Для ручной публикации на GitHub Pages см. подробную инструкцию в файле [DEPLOY.md](./DEPLOY.md).
+
+### Быстрый старт:
+
+1. **Сборка проекта:**
+   ```bash
+   npm run build:gh-pages
+   ```
+
+2. **Настройка GitHub Pages:**
+   - Перейдите в Settings > Pages вашего репозитория
+   - Выберите branch: `gh-pages`, folder: `/ (root)`
+
+3. **Публикация:**
+   - Создайте ветку `gh-pages`
+   - Скопируйте содержимое папки `out` в корень ветки
+   - Закоммитьте и запушьте изменения
+
+Подробные инструкции для Windows и Linux/Mac доступны в [DEPLOY.md](./DEPLOY.md).
