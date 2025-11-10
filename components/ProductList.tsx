@@ -25,7 +25,7 @@ export default function ProductList() {
   if (error) {
     return (
       <div className="bg-red-100 dark:bg-red-900 border border-red-400 text-red-700 dark:text-red-300 px-4 py-3 rounded">
-        <p>Ошибка загрузки продуктов: {error}</p>
+        <p>Failed to load products: {error}</p>
       </div>
     );
   }
@@ -37,8 +37,8 @@ export default function ProductList() {
         <div className="text-center py-12">
           <p className="text-gray-500 dark:text-gray-400 text-lg">
             {filter === 'favorites' 
-              ? 'Нет избранных продуктов' 
-              : 'Нет продуктов для отображения'}
+              ? 'No favorite products' 
+              : 'No products to display'}
           </p>
         </div>
       </div>

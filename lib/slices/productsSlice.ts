@@ -148,13 +148,13 @@ export const fetchProducts = createAsyncThunk(
         const hasNoDescription = !item.description || String(item.description).trim().length === 0;
         const hasNoImage = !item.image || String(item.image).trim().length === 0;
         const image = hasNoImage
-          ? 'https://via.placeholder.com/600x400?text=%D0%9D%D0%B5%D1%82+%D1%84%D0%BE%D1%82%D0%BE'
+          ? 'https://via.placeholder.com/600x400?text=No+Image'
           : item.image;
         
         return {
           id: item.id,
-          title: item.title || 'Без названия',
-          description: hasNoDescription ? 'Описание отсутствует' : item.description,
+          title: item.title || 'Untitled',
+          description: hasNoDescription ? 'No description' : item.description,
           price: typeof item.price === 'number' ? item.price : Number(item.price) || 0,
           image,
           category: typeof item.category === 'string' ? item.category : undefined,
@@ -175,8 +175,8 @@ export const fetchProducts = createAsyncThunk(
         const hasNoImage = !p.image || p.image.trim().length === 0;
         return {
           ...p,
-          description: hasNoDescription ? 'Описание отсутствует' : p.description,
-          image: hasNoImage ? 'https://via.placeholder.com/600x400?text=%D0%9D%D0%B5%D1%82+%D1%84%D0%BE%D1%82%D0%BE' : p.image,
+          description: hasNoDescription ? 'No description' : p.description,
+          image: hasNoImage ? 'https://via.placeholder.com/600x400?text=No+Image' : p.image,
           hasNoDescription,
           hasNoImage,
         } as Product;
