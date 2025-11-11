@@ -25,9 +25,22 @@ export async function generateStaticParams() {
           item.price && 
           item.image
         );
-        return validProducts.map((item: any) => ({
+        const apiIds = validProducts.map((item: any) => ({
           id: String(item.id),
         }));
+        
+        // Находим максимальный ID из API
+        const maxApiId = validProducts.length > 0 
+          ? Math.max(...validProducts.map((item: any) => Number(item.id) || 0))
+          : 0;
+        
+        // Добавляем резервный диапазон для созданных пользователем товаров
+        // Генерируем ID от maxApiId+1 до maxApiId+1000
+        const reserveIds = Array.from({ length: 1000 }, (_, i) => ({
+          id: String(maxApiId + i + 1),
+        }));
+        
+        return [...apiIds, ...reserveIds];
       }
     }
   } catch (error) {
@@ -35,8 +48,9 @@ export async function generateStaticParams() {
   }
 
   // Если API недоступен, используем моковые данные
-  // Моковые данные с ID от 1 до 20 (больше чем в моках, чтобы покрыть возможные ID из API)
-  return Array.from({ length: 20 }, (_, i) => ({
+  // Генерируем диапазон ID (1-1000) для покрытия возможных ID созданных пользователем товаров
+  // Это необходимо для статического экспорта - все пути должны быть предварительно сгенерированы
+  return Array.from({ length: 1000 }, (_, i) => ({
     id: String(i + 1),
   }));
 }

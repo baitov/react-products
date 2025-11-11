@@ -1,19 +1,35 @@
 'use client';
 
-import { useParams } from 'next/navigation';
-import { useAppSelector } from '@/lib/hooks';
-import { Heart } from 'lucide-react';
+import { useParams, useRouter } from 'next/navigation';
+import { useAppSelector, useAppDispatch } from '@/lib/hooks';
+import { toggleLike, removeProduct } from '@/lib/slices/productsSlice';
+import { Heart, Trash2 } from 'lucide-react';
 import Link from 'next/link';
 
 // Клиентский компонент для детального просмотра продукта
 export default function ProductDetailClient() {
   const params = useParams();
+  const router = useRouter();
+  const dispatch = useAppDispatch();
   const productId = Number(params.id);
 
   // Получаем продукт из store
   const product = useAppSelector((state) =>
     state.products.items.find((p) => p.id === productId)
   );
+
+  // Обработчик клика на лайк
+  const handleLikeClick = () => {
+    dispatch(toggleLike(productId));
+  };
+
+  // Обработчик клика на удаление
+  const handleDeleteClick = () => {
+    if (confirm('Are you sure you want to delete this product?')) {
+      dispatch(removeProduct(productId));
+      router.push('/');
+    }
+  };
 
   if (!product) {
     return (
@@ -66,14 +82,31 @@ export default function ProductDetailClient() {
               <h1 className="text-3xl font-bold text-gray-900 dark:text-white flex-1">
                 {product.title}
               </h1>
-              <Heart
-                size={24}
-                className={`ml-4 ${
-                  product.isLiked
-                    ? 'fill-red-500 text-red-500'
-                    : 'text-gray-400'
-                }`}
-              />
+              <div className="flex gap-2 ml-4">
+                {/* Кнопка лайка */}
+                <button
+                  onClick={handleLikeClick}
+                  className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                  aria-label={product.isLiked ? 'Remove like' : 'Set like'}
+                >
+                  <Heart
+                    size={24}
+                    className={
+                      product.isLiked
+                        ? 'fill-red-500 text-red-500'
+                        : 'text-gray-400'
+                    }
+                  />
+                </button>
+                {/* Кнопка удаления */}
+                <button
+                  onClick={handleDeleteClick}
+                  className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                  aria-label="Delete product"
+                >
+                  <Trash2 size={24} className="text-gray-400 hover:text-red-500" />
+                </button>
+              </div>
             </div>
 
             {product.category && (
