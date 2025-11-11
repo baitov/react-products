@@ -255,7 +255,12 @@ const productsSlice = createSlice({
       })
       .addCase(fetchProducts.fulfilled, (state, action) => {
         state.loading = false;
-        state.items = action.payload;
+        // Объединяем данные из API с уже существующими товарами
+        // Сохраняем созданные пользователем товары (те, которых нет в API)
+        const apiProductIds = new Set(action.payload.map(p => p.id));
+        const userCreatedProducts = state.items.filter(p => !apiProductIds.has(p.id));
+        // Объединяем: сначала созданные пользователем, потом из API
+        state.items = [...userCreatedProducts, ...action.payload];
       })
       .addCase(fetchProducts.rejected, (state, action) => {
         state.loading = false;
