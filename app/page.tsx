@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import { fetchProducts } from '@/lib/slices/productsSlice';
 import ProductList from '@/components/ProductList';
+import Link from 'next/link';
 
 // Главная страница: список продуктов
 export default function HomeProductsPage() {
@@ -22,12 +23,12 @@ export default function HomeProductsPage() {
         <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
           Products
         </h1>
-        <a
+        <Link
           href="/create-product"
           className="inline-block mt-2 bg-green-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-green-700"
         >
           Create product
-        </a>
+        </Link>
       </div>
       <ProductList />
     </div>
