@@ -5,10 +5,20 @@ import ProductCard from './ProductCard';
 import Filter from './Filter';
 import Pagination from './Pagination';
 import { Loader2 } from 'lucide-react';
+import { useEffect } from 'react';
 
 // Компонент списка продуктов с фильтрацией и пагинацией
 export default function ProductList() {
   const { items, loading, error, filter, currentPage, itemsPerPage } = useAppSelector((state) => state.products);
+
+  // Сохраняем товары в localStorage при изменении
+  useEffect(() => {
+    try {
+      localStorage.setItem('products-items', JSON.stringify(items));
+    } catch {
+      // noop
+    }
+  }, [items]);
 
   // Фильтруем продукты в зависимости от выбранного фильтра
   const filteredProducts = filter === 'favorites' 

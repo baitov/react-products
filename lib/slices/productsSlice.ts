@@ -194,6 +194,10 @@ const productsSlice = createSlice({
   name: 'products',
   initialState,
   reducers: {
+    // Установить список продуктов (гидратация из localStorage)
+    setItems: (state, action: PayloadAction<Product[]>) => {
+      state.items = action.payload;
+    },
     // Переключение лайка на продукте
     toggleLike: (state, action: PayloadAction<number>) => {
       const product = state.items.find((item) => item.id === action.payload);
@@ -258,7 +262,7 @@ const productsSlice = createSlice({
   },
 });
 
-export const { toggleLike, removeProduct, setFilter, addProduct, setCurrentPage, setItemsPerPage } = productsSlice.actions;
+export const { setItems, toggleLike, removeProduct, setFilter, addProduct, setCurrentPage, setItemsPerPage } = productsSlice.actions;
 export default productsSlice.reducer;
 
 
