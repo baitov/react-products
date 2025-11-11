@@ -12,7 +12,17 @@ export default function HomeProductsPage() {
   const { items } = useAppSelector((state) => state.products);
 
   useEffect(() => {
-    if (items.length === 0) {
+    let hasPersistedItems = false;
+    try {
+      if (typeof window !== 'undefined') {
+        const persisted = localStorage.getItem('products-items');
+        hasPersistedItems = !!(persisted && JSON.parse(persisted)?.length);
+      }
+    } catch {
+      hasPersistedItems = false;
+    }
+
+    if (!hasPersistedItems && items.length === 0) {
       dispatch(fetchProducts());
     }
   }, [dispatch, items.length]);

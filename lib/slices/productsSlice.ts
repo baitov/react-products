@@ -237,11 +237,13 @@ const productsSlice = createSlice({
       const newId = state.items.length > 0 
         ? Math.max(...state.items.map(p => p.id)) + 1 
         : 1;
-      state.items.push({
+      const newProduct: Product = {
         ...action.payload,
         id: newId,
         isLiked: false,
-      });
+      } as Product;
+      state.items = [newProduct, ...state.items];
+      state.currentPage = 1;
     },
   },
   extraReducers: (builder) => {
